@@ -24,7 +24,19 @@ builder.Services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme).AddJ
 
 //builder.Services.AddOpenTelemetry
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()  // Permite qualquer origem
+              .AllowAnyHeader()  // Permite qualquer cabeçalho
+              .AllowAnyMethod(); // Permite qualquer método (GET, POST, PUT, DELETE, etc.)
+    });
+
+});
+
 WebApplication app = builder.Build();
+app.UseCors();
 
 if (app.Environment.IsDevelopment())
 {
@@ -34,7 +46,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("users/me", (ClaimsPrincipal claimsPrincipal) =>
 {
-    return claimsPrincipal.Claims.ToDictionary(x => x.Type, x => x.Value);
+    return claimsPrincipal.Claims.ToLookup(x => x.Type, x => x.Value);
 }).RequireAuthorization();
 
 app.UseAuthentication();

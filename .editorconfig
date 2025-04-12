@@ -52,6 +52,7 @@ dotnet_style_prefer_conditional_expression_over_return = true:none
 dotnet_style_prefer_inferred_anonymous_type_member_names = true:error
 dotnet_style_prefer_inferred_tuple_names = true:error
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true:error
+dotnet_diagnostic.S1135.severity = warning
 csharp_indent_labels = one_less_than_current
 csharp_using_directive_placement = outside_namespace:error
 csharp_prefer_simple_using_statement = true:error
@@ -396,3 +397,6 @@ dotnet_diagnostic.S6781.severity = none
 
 # S6966: Awaitable method should be used
 dotnet_diagnostic.S6966.severity = none
+
+# S6966: Awaitable method should be used
+dotnet_diagnostic.S1135.severity = none
