@@ -4,6 +4,8 @@ using System.Text.Json.Nodes;
 using keycloack_auth.test.Fixture;
 using keycloack_auth.test.Fixture.Collection;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace keycloack_auth.test;
 
@@ -14,15 +16,28 @@ public class AuthenticateEndpointTests(ApiFactoryFixture apiFactory)
     ApiFactoryFixture _apiFactory = apiFactory;
 
     [Fact]
-    public async Task Test1()
+    public async Task GetUsersMe_SemToken_DeveRetornarForbidden()
     {
         //Arrange
+        var apiUrl = "users/me";
 
-        //The realm and the client configured in the Keycloak server
+        //Act
+        var result = await _apiFactory.ServerClient.GetAsync(apiUrl);
+
+        var teste = result.Content.ReadAsStringAsync();
+
+        //Assert
+        Assert.False(result.IsSuccessStatusCode);
+        Assert.Equal(HttpStatusCode.Forbidden, result.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetUsersMe_ComTokenSemRoleGestor_DeveRetornarForbidden()
+    {
+        //Arrange
         var realm = "myrealm";
         var client = "myclient";
 
-        //Keycloak server token endpoint
         var tokenUrl = $"http://localhost:7080/realms/{realm}/protocol/openid-connect/token";
 
         var apiUrl = "users/me";
@@ -35,22 +50,55 @@ public class AuthenticateEndpointTests(ApiFactoryFixture apiFactory)
             new KeyValuePair<string, string>("grant_type", "password")
         });
 
-        //Get the access token from the Keycloak server
         var response = await _client.PostAsync(tokenUrl, formData);
         var content = await response.Content.ReadFromJsonAsync<JsonObject>();
         var token = content?["access_token"]?.ToString();
 
-        //token = _apiFactory.GetToken();
-        //Act
-
-        //Add the access token to request header
         _apiFactory.ServerClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        //Call the Api secure endpoint
-        //var result = await _httpClient.GetAsync(apiUrl);
+        //Act
+
         var result = await _apiFactory.ServerClient.GetAsync(apiUrl);
+
+        var teste = result.Content.ReadAsStringAsync();
+
+        //Assert
+        Assert.False(result.IsSuccessStatusCode);
+        Assert.Equal(HttpStatusCode.Forbidden, result.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetUsersMe_ComTokenComRoleGestor_DeveRetornarOk()
+    {
+        //Arrange
+        var realm = "myrealm";
+        var client = "myclient";
+
+        var tokenUrl = $"http://localhost:7080/realms/{realm}/protocol/openid-connect/token";
+
+        var apiUrl = "users/me";
+
+        var formData = new FormUrlEncodedContent(new[]
+        {
+            new KeyValuePair<string, string>("client_id", $"{client}"),
+            new KeyValuePair<string, string>("username", "gestor"),
+            new KeyValuePair<string, string>("password", UserConstants.Password),
+            new KeyValuePair<string, string>("grant_type", "password")
+        });
+
+        var response = await _client.PostAsync(tokenUrl, formData);
+        var content = await response.Content.ReadFromJsonAsync<JsonObject>();
+        var token = content?["access_token"]?.ToString();
+        _apiFactory.ServerClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    
+        //Act
+
+        var result = await _apiFactory.ServerClient.GetAsync(apiUrl);
+
+        var teste = result.Content.ReadAsStringAsync();
 
         //Assert
         Assert.True(result.IsSuccessStatusCode);
+        Assert.Equal(HttpStatusCode.OK, result.StatusCode);
     }
 }

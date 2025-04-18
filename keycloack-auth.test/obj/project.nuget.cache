@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Yky0V/JxCsk=",
+  "dgSpecHash": "BvxjM52ZWTM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloack-auth.test\\keycloack-auth.test.csproj",
+  "projectFilePath": "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloack\\keycloack-auth.test\\keycloack-auth.test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rafael\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\Rafael\\.nuget\\packages\\docker.dotnet\\3.125.15\\docker.dotnet.3.125.15.nupkg.sha512",

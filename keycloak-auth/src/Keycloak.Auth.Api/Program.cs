@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Keycloak.Auth.Api.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.IdentityModel.Tokens;
 using OpenTelemetry.Resources;
@@ -36,6 +37,18 @@ builder.Services
         tracing.AddOtlpExporter();
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("gestor", policy =>
+    {
+        policy.Requirements.Add(new RealmRoleRequirement("gestor"));
+    });
+});
+
+// E registrar o handler
+builder.Services.AddSingleton<IAuthorizationHandler, RealmRoleHandler>();
+
+
 WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -47,7 +60,7 @@ if (app.Environment.IsDevelopment())
 app.MapGet("users/me", (ClaimsPrincipal claimsPrincipal) =>
 {
     return "sucesso";
-}).RequireAuthorization();
+}).RequireAuthorization("gestor");
 
 app.UseAuthentication();
 

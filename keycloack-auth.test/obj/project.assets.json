@@ -9341,11 +9341,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloack-auth.test\\keycloack-auth.test.csproj",
+      "projectUniqueName": "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloack\\keycloack-auth.test\\keycloack-auth.test.csproj",
       "projectName": "keycloack-auth.test",
-      "projectPath": "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloack-auth.test\\keycloack-auth.test.csproj",
+      "projectPath": "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloack\\keycloack-auth.test\\keycloack-auth.test.csproj",
       "packagesPath": "C:\\Users\\Rafael\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloack-auth.test\\obj\\",
+      "outputPath": "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloack\\keycloack-auth.test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "G:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -9366,8 +9366,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloak-auth\\src\\Keycloak.Auth.Api\\Keycloak.Auth.Api.csproj": {
-              "projectPath": "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloak-auth\\src\\Keycloak.Auth.Api\\Keycloak.Auth.Api.csproj"
+            "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloack\\keycloak-auth\\src\\Keycloak.Auth.Api\\Keycloak.Auth.Api.csproj": {
+              "projectPath": "C:\\Users\\Rafael\\Downloads\\source-code-keycloak-dotnet\\after\\keycloack\\keycloak-auth\\src\\Keycloak.Auth.Api\\Keycloak.Auth.Api.csproj"
             }
           }
         }

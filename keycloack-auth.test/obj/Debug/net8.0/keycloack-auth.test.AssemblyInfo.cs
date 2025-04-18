@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("keycloack-auth.test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02e726bc620870852ebe25c13726da4e63b6eb5f")]
 [assembly: System.Reflection.AssemblyProductAttribute("keycloack-auth.test")]
 [assembly: System.Reflection.AssemblyTitleAttribute("keycloack-auth.test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
