@@ -37,13 +37,22 @@ builder.Services
         tracing.AddOtlpExporter();
     });
 
-builder.Services.AddAuthorization(options =>
+Role[] allRoles = typeof(Role)
+    .GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)
+    .Where(f => f.FieldType == typeof(Role))
+    .Select(f => (Role)f.GetValue(null)!)
+    .ToArray();
+
+foreach (Role role in allRoles)
 {
-    options.AddPolicy("gestor", policy =>
+    builder.Services.AddAuthorization(options =>
     {
-        policy.Requirements.Add(new RealmRoleRequirement("gestor"));
+        options.AddPolicy(role.Value, policy =>
+        {
+            policy.Requirements.Add(new RealmRoleRequirement(role.Value));
+        });
     });
-});
+}
 
 // E registrar o handler
 builder.Services.AddSingleton<IAuthorizationHandler, RealmRoleHandler>();
@@ -60,7 +69,7 @@ if (app.Environment.IsDevelopment())
 app.MapGet("users/me", (ClaimsPrincipal claimsPrincipal) =>
 {
     return "sucesso";
-}).RequireAuthorization("gestor");
+}).RequireAuthorization(Role.Gestor.ToString());
 
 app.UseAuthentication();
 
@@ -70,6 +79,6 @@ app.Run();
 
 
 
-#pragma warning disable CA1515 // Considere tornar internos os tipos públicos
+#pragma warning disable CA1515
 public partial class Program { }
-#pragma warning restore CA1515 // Considere tornar internos os tipos públicos
+#pragma warning restore CA1515

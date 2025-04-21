@@ -1,4 +1,6 @@
-﻿using System.Security.Claims;
+﻿using System.ComponentModel;
+using System.Reflection;
+using System.Security.Claims;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
@@ -17,15 +19,30 @@ internal sealed class RealmRoleHandler : AuthorizationHandler<RealmRoleRequireme
             {
                 foreach (JsonElement role in roles.EnumerateArray())
                 {
-                    if (role.GetString() == requirement.Role)
+                    string roleString = role.GetString();
+
+                    if (roleString != null && roleString.Equals(requirement.Role, StringComparison.OrdinalIgnoreCase))
                     {
                         context.Succeed(requirement);
                     }
+
                 }
             }
         }
 
         return Task.CompletedTask;
+    }
+    internal static string GetDescription(Enum value)
+    {
+        MemberInfo field = value.GetType().GetField(value.ToString());
+
+        if(field == null)
+        {
+            return null;
+        }
+
+        var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
+        return attribute == null ? value.ToString() : attribute.Description;
     }
 }
 
